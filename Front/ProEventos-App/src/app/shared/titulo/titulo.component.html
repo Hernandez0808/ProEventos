@@ -1,2 +1,15 @@
-<h3>{{titulo}}</h3>
-<hr>
+<div class="d-flex justify-content-between p-2 my-3 text-white bg-secondary rounded shadow-sm">
+  <div class="row">
+    <div class="col mt-2">
+    <i class="{{iconClass}}"></i>
+  </div>
+      <div class="col lh-100">
+      <h2>{{titulo}}</h2>
+      <small>{{subTitulo}}</small>
+    </div>
+    </div>
+    <div class="mt-4">
+      <button *ngIf="botaoLista" class="btn btn-outline-light " (click)="listar()" >Listar Eventos</button>
+    </div>
+  </div>
+
