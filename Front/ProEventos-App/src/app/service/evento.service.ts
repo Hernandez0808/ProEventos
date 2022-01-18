@@ -10,6 +10,7 @@ import { Evento } from '../models/evento';
 export class EventoService {
 
   baseUrl = environment.urlApi + "Eventos";
+
   constructor(private http:HttpClient) { }
 
 
