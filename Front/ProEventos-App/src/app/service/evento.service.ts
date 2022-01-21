@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { take } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { Evento } from '../models/evento';
 
@@ -18,12 +19,30 @@ export class EventoService {
 
     return this.http.get<Evento[]>(this.baseUrl);
   }
-  getEventoByTema(tema:string): Observable<Evento[]>{
-
-    return this.http.get<Evento[]>(this.baseUrl + "/EventoTema/" + tema);
-  }
 
   getEventoById(id:number): Observable<Evento> {
-    return this.http.get<Evento>(this.baseUrl + "/EventoId/" + id);
+    return this.http.get<Evento>(this.baseUrl + "/EventoId/" + id)
+      .pipe(take(1));
+  }
+
+  getEventoByTema(tema:string): Observable<Evento[]>{
+
+    return this.http.get<Evento[]>(this.baseUrl + "/EventoTema/" + tema)
+      .pipe(take(1));
+  }
+
+  postEvento(evento:Evento): Observable<Evento> {
+    return this.http.post<Evento>(this.baseUrl,evento)
+      .pipe(take(1));
+  }
+
+  putEvento(evento:Evento): Observable<Evento> {
+    return this.http.put<Evento>(this.baseUrl + "/EventoUpdate/" + evento.id, evento)
+      .pipe(take(1));
+  }
+
+  deleteEvento(id:number): Observable<any> {
+    return this.http.delete(this.baseUrl + "/DeleteEvento/" + id)
+      .pipe(take(1));
   }
 }
