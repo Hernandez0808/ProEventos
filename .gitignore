@@ -432,6 +432,7 @@ $RECYCLE.BIN/
 .idea/
 *.sln.iml
 
+
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 
 # compiled output
@@ -446,6 +447,7 @@ $RECYCLE.BIN/
 
 # profiling files
 chrome-profiler-events*.json
+speed-measure-plugin*.json
 
 # IDEs and editors
 /.idea
@@ -478,3 +480,7 @@ testem.log
 .DS_Store
 Thumbs.db
 
+#Excluindo DB
+*.db
+*.db-shm
+*.db-wal

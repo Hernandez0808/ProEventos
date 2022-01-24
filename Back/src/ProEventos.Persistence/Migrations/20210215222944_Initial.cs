@@ -34,7 +34,7 @@ namespace ProEventos.Persistence.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     Nome = table.Column<string>(type: "TEXT", nullable: true),
                     MiniCurriculo = table.Column<string>(type: "TEXT", nullable: true),
-                    ImagemUrl = table.Column<string>(type: "TEXT", nullable: true),
+                    ImagemURL = table.Column<string>(type: "TEXT", nullable: true),
                     Telefone = table.Column<string>(type: "TEXT", nullable: true),
                     Email = table.Column<string>(type: "TEXT", nullable: true)
                 },
@@ -68,7 +68,7 @@ namespace ProEventos.Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "PalestranteEventos",
+                name: "PalestrantesEventos",
                 columns: table => new
                 {
                     PalestranteId = table.Column<int>(type: "INTEGER", nullable: false),
@@ -76,15 +76,15 @@ namespace ProEventos.Persistence.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PalestranteEventos", x => new { x.EventoId, x.PalestranteId });
+                    table.PrimaryKey("PK_PalestrantesEventos", x => new { x.EventoId, x.PalestranteId });
                     table.ForeignKey(
-                        name: "FK_PalestranteEventos_Eventos_EventoId",
+                        name: "FK_PalestrantesEventos_Eventos_EventoId",
                         column: x => x.EventoId,
                         principalTable: "Eventos",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_PalestranteEventos_Palestrantes_PalestranteId",
+                        name: "FK_PalestrantesEventos_Palestrantes_PalestranteId",
                         column: x => x.PalestranteId,
                         principalTable: "Palestrantes",
                         principalColumn: "Id",
@@ -92,7 +92,7 @@ namespace ProEventos.Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "RedeSociais",
+                name: "RedesSociais",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
@@ -104,15 +104,15 @@ namespace ProEventos.Persistence.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_RedeSociais", x => x.Id);
+                    table.PrimaryKey("PK_RedesSociais", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_RedeSociais_Eventos_EventoId",
+                        name: "FK_RedesSociais_Eventos_EventoId",
                         column: x => x.EventoId,
                         principalTable: "Eventos",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_RedeSociais_Palestrantes_PalestranteId",
+                        name: "FK_RedesSociais_Palestrantes_PalestranteId",
                         column: x => x.PalestranteId,
                         principalTable: "Palestrantes",
                         principalColumn: "Id",
@@ -125,18 +125,18 @@ namespace ProEventos.Persistence.Migrations
                 column: "EventoId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PalestranteEventos_PalestranteId",
-                table: "PalestranteEventos",
+                name: "IX_PalestrantesEventos_PalestranteId",
+                table: "PalestrantesEventos",
                 column: "PalestranteId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_RedeSociais_EventoId",
-                table: "RedeSociais",
+                name: "IX_RedesSociais_EventoId",
+                table: "RedesSociais",
                 column: "EventoId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_RedeSociais_PalestranteId",
-                table: "RedeSociais",
+                name: "IX_RedesSociais_PalestranteId",
+                table: "RedesSociais",
                 column: "PalestranteId");
         }
 
@@ -146,10 +146,10 @@ namespace ProEventos.Persistence.Migrations
                 name: "Lotes");
 
             migrationBuilder.DropTable(
-                name: "PalestranteEventos");
+                name: "PalestrantesEventos");
 
             migrationBuilder.DropTable(
-                name: "RedeSociais");
+                name: "RedesSociais");
 
             migrationBuilder.DropTable(
                 name: "Eventos");

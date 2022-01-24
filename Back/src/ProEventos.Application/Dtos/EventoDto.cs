@@ -5,7 +5,7 @@ namespace ProEventos.Application.Dtos
 {
     public class EventoDto
     {
-         public int Id { get; set; }
+        public int Id { get; set; }
         public string Local { get; set; }
         public string DataEvento { get; set; }
 
@@ -34,9 +34,9 @@ namespace ProEventos.Application.Dtos
         [EmailAddress(ErrorMessage = "É necessário ser um {0} válido")]
         public string Email { get; set; }
 
-        public IEnumerable<LoteDto> Lotes {get ; set;}
-        public IEnumerable<RedeSocialDto> RedeSociais {get ; set;}
-        public IEnumerable<PalestranteDto> PalestrantesEventos {get ; set;}
+        public IEnumerable<LoteDto> Lotes { get; set; }
+        public IEnumerable<RedeSocialDto> RedesSociais { get; set; }
+        public IEnumerable<PalestranteDto> Palestrantes { get; set; }
 
     }
 }
