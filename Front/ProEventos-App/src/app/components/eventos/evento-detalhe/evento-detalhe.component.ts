@@ -17,6 +17,8 @@ import { EventoService } from '@app/services/evento.service';
 import { Evento } from '@app/models/Evento';
 import { Lote } from '@app/models/Lote';
 import { DatePipe } from '@angular/common';
+import { Observable } from 'rxjs';
+import { environment } from '@environments/environment';
 
 @Component({
   selector: 'app-evento-detalhe',
@@ -31,6 +33,8 @@ export class EventoDetalheComponent implements OnInit {
   form: FormGroup;
   estadoSalvar = 'post';
   loteAtual = {id: 0, nome: '', indice: 0};
+  imagemURL = 'assets/image/upLoad.png';
+  file: File;
 
   get modoEditar(): boolean {
     return this.estadoSalvar === 'put';
@@ -79,6 +83,9 @@ export class EventoDetalheComponent implements OnInit {
         (evento: Evento) => {
           this.evento = {...evento};
           this.form.patchValue(this.evento);
+          if (this.evento.imagemURL !== ''){
+            this.imagemURL = environment.apiURL + 'resources/images/' + this.evento.imagemURL;
+          }
           this.carregarLotes();
         },
         (error: any) => {
@@ -116,7 +123,7 @@ export class EventoDetalheComponent implements OnInit {
       qtdPessoas: ['', [Validators.required, Validators.max(120000)]],
       telefone: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      imagemURL: ['', Validators.required],
+      image:[''],
       lotes: this.fb.array([])
     });
   }
@@ -132,7 +139,7 @@ export class EventoDetalheComponent implements OnInit {
       quantidade: [lote.quantidade, Validators.required],
       preco: [lote.preco, Validators.required],
       dataInicio: [lote.dataInicio],
-      dataFim: [lote.dataFim]
+      dataFim: [lote.dataFim],
     });
   }
 
@@ -220,6 +227,42 @@ export class EventoDetalheComponent implements OnInit {
 
   declineDeleteLote(): void {
     this.modalRef.hide();
+  }
+  public onFileChange(ev: any): void{
+    const reader = new FileReader();
+
+    reader.onload = (event: any) => this.imagemURL = event.target.result;
+
+    this.file = ev.target.files;
+
+    reader.readAsDataURL(this.file[0]);
+    console.log(this.file);
+
+    this.uploadImagem();
+  }
+
+  uploadImagem(): void{
+    this.spinner.show();
+    this.evento.imagemURL = this.form.value.image;
+    this.eventoService.put(this.evento).subscribe(()=>{
+    this.eventoService.postUpload(this.eventoId, this.file).subscribe(
+      () => {
+        this.carregarEvento();
+        this.toastr.success('Imagem atualizada com Sucesso', 'Sucesso');
+      },
+      (error: any) => {
+        this.toastr.error('Erro ao fazer upload de imagem', 'Erro!');
+        console.log(error);
+      },
+      ).add(() => {this.spinner.hide(); });
+  });
+  }
+
+  public mostraImagem(imagemURL: string): string {
+    console.log(imagemURL)
+    return (imagemURL !== '' && imagemURL != null )
+      ? `${environment.apiURL}resources/images/${imagemURL}`
+      : 'assets/image/semImagem.jpeg';
   }
 
 }
